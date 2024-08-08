@@ -28,15 +28,17 @@ var ModelRatio = map[string]float64{
 	"gpt-4-32k":               30,
 	"gpt-4-32k-0314":          30,
 	"gpt-4-32k-0613":          30,
-	"gpt-4-1106-preview":      5,    // $0.01 / 1K tokens
-	"gpt-4-0125-preview":      5,    // $0.01 / 1K tokens
-	"gpt-4-turbo-preview":     5,    // $0.01 / 1K tokens
-	"gpt-4-turbo":             5,    // $0.01 / 1K tokens
-	"gpt-4-turbo-2024-04-09":  5,    // $0.01 / 1K tokens
-	"gpt-4o":                  2.5,  // $0.005 / 1K tokens
-	"gpt-4o-2024-05-13":       2.5,  // $0.005 / 1K tokens
-	"gpt-4-vision-preview":    5,    // $0.01 / 1K tokens
-	"gpt-3.5-turbo":           0.25, // $0.0005 / 1K tokens
+	"gpt-4-1106-preview":      5,     // $0.01 / 1K tokens
+	"gpt-4-0125-preview":      5,     // $0.01 / 1K tokens
+	"gpt-4-turbo-preview":     5,     // $0.01 / 1K tokens
+	"gpt-4-turbo":             5,     // $0.01 / 1K tokens
+	"gpt-4-turbo-2024-04-09":  5,     // $0.01 / 1K tokens
+	"gpt-4o":                  2.5,   // $0.005 / 1K tokens
+	"gpt-4o-2024-05-13":       2.5,   // $0.005 / 1K tokens
+	"gpt-4o-mini":             0.075, // $0.00015 / 1K tokens
+	"gpt-4o-mini-2024-07-18":  0.075, // $0.00015 / 1K tokens
+	"gpt-4-vision-preview":    5,     // $0.01 / 1K tokens
+	"gpt-3.5-turbo":           0.25,  // $0.0005 / 1K tokens
 	"gpt-3.5-turbo-0301":      0.75,
 	"gpt-3.5-turbo-0613":      0.75,
 	"gpt-3.5-turbo-16k":       1.5, // $0.003 / 1K tokens
@@ -96,12 +98,11 @@ var ModelRatio = map[string]float64{
 	"bge-large-en":       0.002 * RMB,
 	"tao-8k":             0.002 * RMB,
 	// https://ai.google.dev/pricing
-	"PaLM-2":                    1,
-	"gemini-pro":                1, // $0.00025 / 1k characters -> $0.001 / 1k tokens
-	"gemini-pro-vision":         1, // $0.00025 / 1k characters -> $0.001 / 1k tokens
-	"gemini-1.0-pro-vision-001": 1,
-	"gemini-1.0-pro-001":        1,
-	"gemini-1.5-pro":            1,
+	"gemini-pro":       1, // $0.00025 / 1k characters -> $0.001 / 1k tokens
+	"gemini-1.0-pro":   1,
+	"gemini-1.5-flash": 1,
+	"gemini-1.5-pro":   1,
+	"aqa":              1,
 	// https://open.bigmodel.cn/pricing
 	"glm-4":         0.1 * RMB,
 	"glm-4v":        0.1 * RMB,
@@ -312,6 +313,9 @@ func GetCompletionRatio(name string, channelType int) float64 {
 		return 4.0 / 3.0
 	}
 	if strings.HasPrefix(name, "gpt-4") {
+		if strings.HasPrefix(name, "gpt-4o-mini") {
+			return 4
+		}
 		if strings.HasPrefix(name, "gpt-4-turbo") ||
 			strings.HasPrefix(name, "gpt-4o") ||
 			strings.HasSuffix(name, "preview") {
