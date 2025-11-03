@@ -86,8 +86,7 @@ func (a *Adaptor) GetRequestURL(meta *meta.Meta) (string, error) {
 		), nil
 	}
 	return fmt.Sprintf(
-		"https://%s-aiplatform.googleapis.com/v1/projects/%s/locations/%s/publishers/google/models/%s:%s",
-		meta.Config.Region,
+		"https://aiplatform.googleapis.com/v1/projects/%s/locations/%s/publishers/google/models/%s:%s",
 		meta.Config.VertexAIProjectID,
 		meta.Config.Region,
 		meta.ActualModelName,
